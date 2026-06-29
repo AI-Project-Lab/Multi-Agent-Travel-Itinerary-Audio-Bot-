@@ -23,6 +23,10 @@ pyttsx3 = "^2.98"
 gradio = "^4.44.1"
 ipykernel = "^6.29.5"
 langchain-community = "^0.3.1"
+# --- Multi-agent orchestration stack (NEW for this project) ---
+langgraph = "^0.2.50"          # builds the agent graph (StateGraph, nodes, edges)
+langchain-core = "^0.3.15"     # core message/tool primitives shared by LangChain + LangGraph
+langchain-openai = "^0.2.5"    # ChatOpenAI wrapper so our agents can talk to OpenAI models
 transformers = "^4.45.1"
 jupyter = "^1.1.1"
 python-dotenv = "^1.0.1"
@@ -39,7 +43,9 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-ExtractWebPagesAndSaveData = "genai_voice.data_utils.extract_web_data:run"
+# Launch the Gradio web app for the multi-agent voice travel bot.
+#   poetry run RunChatBotScript
 RunChatBotScript = "app.chatbot_gradio_runner:run"
-RunChatBotAudioFromFileScript = "app.chatbot_gradio_runner:run_with_file_support"
-CallSasmitaToClass = "test.sasmita:foo"
+# Run the agent graph once from the terminal (no microphone needed) for a quick test.
+#   poetry run RunItineraryGraph
+RunItineraryGraph = "genai_voice.graph.runner:run_cli"
